@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if post %}
+    Редактирование
+  {% else %}
+    Новый пост
+  {% endif %}   
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 p-5">
+        <div class="card">
+          <div class="card-header">       
+            {% if post %}   
+              Редактировать
+            {% else %}
+              Новый пост
+            {% endif %}              
+          </div>
+          <div class="card-body"> 
+            <form method="post" {% if post %} action="{% url 'group:post_edit' post_id=post.id %}" {% else %} action="{% url 'group:post_create' %}" {% endif %}>            
+              {% csrf_token %} 
+              <div class="form-group row my-2 p-3">
+                {{ form }}
+              </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-primary">
+                  {% if post %}
+                    Сохранить
+                  {% else %}
+                    Добавить
+                  {% endif %} 
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
