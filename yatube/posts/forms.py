@@ -1,10 +1,7 @@
-from cProfile import label
-from wsgiref.validate import validator
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-from .models import Post, Group
+from .models import Post
 
 
 User = get_user_model()
