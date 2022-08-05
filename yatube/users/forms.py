@@ -8,7 +8,7 @@ User = get_user_model()
 class CreationForm(UserCreationForm):
     """Форма для регистрации нового пользователя."""
 
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         """Информация о созданном новом пользователе."""
 
         model = User

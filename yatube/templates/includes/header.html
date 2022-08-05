@@ -39,7 +39,10 @@
       <li class="nav-item">
         <a class="nav-link link-light" href="{% url 'users:logout' %}">Выйти</a>
       </li>
-      <li>Пользователь: {{ user.username }}</li>
+      <li>
+
+        <a href="{% url 'group:profile' user %}">Пользователь: {{ user.username }}</a>
+      </li>
       {% else %}
       <li class="nav-item">
         <a
@@ -59,8 +62,7 @@
     </ul>
   </div>
   {% endwith %}
-
-  <!--
+{% comment %} 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -93,5 +95,5 @@
       </form>
     </div>
   </div>
-  -->
+{% endcomment %}
 </nav>
