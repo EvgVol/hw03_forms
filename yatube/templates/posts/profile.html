@@ -6,9 +6,16 @@
   <h3>Всего постов: {{ paginator.count }} </h3>
   {% for group in page_obj %}
     <article >
-      <ul class="card-header" style="text-decoration: none;">
-        <li style="list-style:none;">
-          Дата публикации: span{{ group.pub_date|date:"d E Y"  }}
+      <ul 
+        class="card-header"
+        style=" 
+          display: flex;
+          justify-content:space-between;">
+          <li style="list-style:none;">
+            Группа: <span> {{ group.group }} </span>
+          </li>
+          <li style="list-style:none;">
+          Дата публикации: {{ group.pub_date|date:"d E Y"  }}
         </li>
       </ul>
       <p>
