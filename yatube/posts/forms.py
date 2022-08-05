@@ -17,6 +17,6 @@ class PostForm(forms.ModelForm):
             "text": "Текст",
             "group": "Группа"
         }
-        widgets = {
-            'text': forms.Textarea(),
+        help_texts = {
+            'group': 'Группа, к которой принадлежит это сообщение',
         }

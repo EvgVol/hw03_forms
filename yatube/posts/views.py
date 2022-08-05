@@ -9,10 +9,11 @@ from .forms import PostForm
 
 def index(request):
     """Описывает работу главной страницы."""
-    paginator = Paginator(Post.objects.all(), settings.CONST_TEN)
+    post_list = Post.objects.select_related('author').all()
+    paginator = Paginator(post_list, settings.CONST_TEN)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'posts/index.html', {'page_obj': page_obj})
+    return render(request,'posts/index.html', {'page_obj': page_obj})
 
 
 def group_posts(request, slug):
