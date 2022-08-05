@@ -1,25 +1,12 @@
 {% extends 'base.html' %}
 {% block title %} Записи сообщества {{ group.title }}{% endblock %}
-{% block header %}{{ group.title }}{% endblock %}
+{% block header %}<h1 class="container py-5">{{ group.title }}<h1>{% endblock %}
 {% block content %}
-  <div class="container py-5">
+  <div class="container ">
     {% include 'posts/includes/paginator.html' %}
     <p>{{ group.description|linebreaks }}</p>
     {% for group in page_obj %}
-      <article>
-        <ul>
-          <li>
-            Автор: {{ group.author.get_full_name }}
-          </li>
-          <li>
-            Дата публикации: {{ group.pub_date|date:"d E Y"  }}
-          </li>
-        </ul>      
-        <p>
-          {{ group.text|linebreaks }}
-        </p>
-        {% if not forloop.last %}<hr>{% endif %}
-      </article>
+      {% include 'includes/cart_posts.html' %}
     {% endfor %}
     {% include 'posts/includes/paginator.html' %}
   </div>

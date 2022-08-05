@@ -1,0 +1,55 @@
+<article >
+  <ul 
+    class="card-header"
+    style=" 
+      display: flex;
+      justify-content:space-between;">
+      <li style="list-style:none;">Автор: 
+        <a 
+        style="
+          color: black;
+          text-decoration: none;"
+        href="{% url 'group:profile' group.author.username %}">
+        {% if post.author.get_full_name %}
+          {{ post.author.get_full_name }}
+        {% else %}
+          Аноним
+        {% endif %}
+        </a>
+      </li>
+      <li style="list-style:none;">
+      Дата публикации: {{ group.pub_date|date:"d E Y"  }}
+    </li>
+  </ul>
+  <p>
+    {{ group.text|linebreaks }}
+  </p>
+  
+  <div style="display: flex;
+  justify-content:space-between;">
+    {% if group.group %}
+    <a 
+      class="justify-content-md"
+      style="
+        color: grey;
+        font-style: italic;
+        text-decoration: none;"
+      href="{% url 'group:group_list' group.group.slug %}">
+      <span> # {{ group.group }}
+    </a>
+    {% else %}
+      <span style='color: red'>Этой публикации нет ни в одной группе.</span>
+    {% endif %}
+    <button class="btn btn-primary" type="button">
+      <a 
+        href="{% url 'group:post_detail' group.pk %}"
+        style="
+          color: white;
+          font-style: bold;
+          text-decoration: none;">
+          Подробнее 
+      </a>
+    </button>
+  </div>
+  {% if not forloop.last %}<hr>{% endif %}
+</article>

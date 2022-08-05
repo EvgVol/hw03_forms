@@ -25,9 +25,11 @@ def index(request):
 def group_posts(request, slug):
     """Описывает работу страницы сообщества."""
     group = get_object_or_404(Group, slug=slug)
-    posts_list = group.posts.select_related('author').all()
-    context = {'group': group}
-    context.update(paginator_posts(posts_list, request))
+    post_list = group.posts.select_related('author').all()
+    context = {
+        'group': group,
+        'page_obj': paginator_posts(request, post_list)
+    }
     return render(
         request,
         'posts/group_list.html',
