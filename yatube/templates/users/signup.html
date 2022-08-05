@@ -23,7 +23,6 @@
               </div>
             {% endfor %}
           {% endif %}
-
           <div>
             <form method="post" action="{% url 'users:signup' %}">
               {% csrf_token %}
