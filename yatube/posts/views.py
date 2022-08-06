@@ -10,7 +10,7 @@ def index(request):
     """Описывает работу главной страницы."""
     post_list = Post.objects.select_related('author').all()
     context = {'page_obj': paginator_posts(request, post_list)}
-    return render(request,'posts/index.html', context)
+    return render(request, 'posts/index.html', context)
 
 
 def group_posts(request, slug):
@@ -40,7 +40,7 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    return render(request, 'posts/post_detail.html',{'post': post})
+    return render(request, 'posts/post_detail.html', {'post': post})
 
 
 @login_required
