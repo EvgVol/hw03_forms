@@ -8,8 +8,5 @@
       {% include 'includes/cart_posts.html' %}
     {% endfor %}
     {% include 'posts/includes/paginator.html' %}
-    {% if post.group %}
-      <a href="{% url 'group:group_list' post.group.slug %}">все записи группы</a> 
-    {% endif %}
   </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block title %} Записи сообщества {{ group.title }}{% endblock %}
 {% block header %}<h1 class="container py-5">{{ group.title }}<h1>{% endblock %}
 {% block content %}
-  <div class="container ">
+  <div class="container">
     {% include 'posts/includes/paginator.html' %}
     <p>{{ group.description|linebreaks }}</p>
     {% for group in page_obj %}
