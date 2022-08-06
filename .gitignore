@@ -112,7 +112,7 @@ env.bak/
 venv.bak/
 .venv/
 .vscode/
-/static
+static
 
 
 # Spyder project settings
