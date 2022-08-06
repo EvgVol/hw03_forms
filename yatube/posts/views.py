@@ -1,18 +1,9 @@
-from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
 from .models import Group, Post, User
 from .forms import PostForm
-
-
-def paginator_posts(request, queryset):
-    """Описывает работу пагинатора постов."""
-    paginator = Paginator(queryset, settings.CONST_TEN)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return page_obj
+from .utils import paginator_posts
 
 
 def index(request):
@@ -49,14 +40,7 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    post_author = Post.objects.filter(
-        author__exact=post.author).count()
-
-    return render(
-        request,
-        'posts/post_detail.html',
-        {'post': post, 'post_author': post_author}
-    )
+    return render(request, 'posts/post_detail.html',{'post': post})
 
 
 @login_required
