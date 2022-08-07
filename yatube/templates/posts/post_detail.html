@@ -10,7 +10,7 @@
         <li class="list-group-item">
           Группа: {% if post.group %}
           <a 
-            href="{% url 'group:group_list' post.group.slug %}" 
+            href="{% url 'posts:group_list' post.group.slug %}" 
             style="text-decoration: none; color: black; font-style: italic; ">
               {{ post.group }}
           </a>
@@ -21,17 +21,9 @@
         <li class="list-group-item">
           Автор: 
             {% if post.author.get_full_name %}
-              <a 
-                href="{% url 'group:profile' post.author.username %}"
-                style="text-decoration: none; color: black; font-style: italic; ">
-                  {{ post.author.get_full_name }}
-              </a>
+              {{ post.author.get_full_name }}
             {% else %}
-              <a 
-                href="{% url 'group:profile' post.author.username %}"
-                style="text-decoration: none; color: black; font-style: italic; ">
-                  {{ post.author.username }}
-              </a>
+              {{ post.author.username }}
             {% endif %}
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -41,7 +33,7 @@
           <div class="d-grid gap-2 d-md-block">
             <button class="btn btn-primary" type="button">
               <a 
-                href="{% url 'group:profile' post.author.username %}"
+                href="{% url 'posts:profile' post.author.username %}"
                 style="
                   color: white;
                   font-style: bold;
@@ -60,7 +52,7 @@
       {% if user.username == post.author.username %}
         <a 
           class="btn btn-primary justify-content-md-end" 
-          href="{% url 'group:post_edit' post.pk %}">
+          href="{% url 'posts:post_edit' post.pk %}">
             Редактировать
         </a>
       {% endif %} 

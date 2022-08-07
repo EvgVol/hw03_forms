@@ -16,7 +16,7 @@ def index(request):
 def group_posts(request, slug):
     """Описывает работу страницы сообщества."""
     group = get_object_or_404(Group, slug=slug)
-    post_list = group.posts.select_related('group').all()
+    post_list = group.posts.select_related('author').all()
     context = {
         'group': group,
         'page_obj': paginator_posts(request, post_list)
@@ -30,7 +30,7 @@ def group_posts(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    post_list = author.posts.select_related('author').all()
+    post_list = author.posts.select_related('group').all()
     context = {
         'author': author,
         'page_obj': paginator_posts(request, post_list)
@@ -62,13 +62,13 @@ def post_create(request):
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    if post.author.username != request.user.username:
-        return redirect('group:post_detail', post_id=post.id)
+    if post.author != request.user:
+        return redirect('posts:post_detail', post_id=post.id)
     form = PostForm(request.POST or None, instance=post)
 
     if form.is_valid():
         form.save()
-        return redirect('group:post_detail', post_id=post.id)
+        return redirect('posts:post_detail', post_id=post.id)
 
     return render(
         request,

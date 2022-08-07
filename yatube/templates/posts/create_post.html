@@ -12,7 +12,7 @@
           </div>
           {% include 'includes/check_error.html' %}
           <div class="card-body">
-            <form method="post" {% if form.instance.pk %} action="{% url 'group:post_edit' form.instance.pk %}" {% else %} action="{% url 'group:post_create' %}" {% endif %}>            
+            <form method="post" {% if form.instance.pk %} action="{% url 'posts:post_edit' form.instance.pk %}" {% else %} action="{% url 'posts:post_create' %}" {% endif %}>            
               {% csrf_token %}
               {% include 'includes/cycle_forms.html' %}
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
