@@ -8,7 +8,7 @@ from .utils import paginator_posts
 
 def index(request):
     """Описывает работу главной страницы."""
-    post_list = Post.objects.select_related('author').all()
+    post_list = Post.objects.select_related('author', 'group').all()
     context = {'page_obj': paginator_posts(request, post_list)}
     return render(request, 'posts/index.html', context)
 
@@ -16,7 +16,7 @@ def index(request):
 def group_posts(request, slug):
     """Описывает работу страницы сообщества."""
     group = get_object_or_404(Group, slug=slug)
-    post_list = group.posts.select_related('author').all()
+    post_list = group.posts.select_related('group').all()
     context = {
         'group': group,
         'page_obj': paginator_posts(request, post_list)
@@ -62,6 +62,8 @@ def post_create(request):
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
+    if post.author.username != request.user.username:
+        return redirect('group:post_detail', post_id=post.id)
     form = PostForm(request.POST or None, instance=post)
 
     if form.is_valid():

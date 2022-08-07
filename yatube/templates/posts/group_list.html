@@ -7,8 +7,8 @@
   <div class="container">
     {% include 'posts/includes/paginator.html' %}
     <p>{{ group.description|linebreaks }}</p>
-    {% for group in page_obj %}
-      {% include 'includes/cart_posts.html' %}
+    {% for post in page_obj %}
+      {% include 'posts/includes/cart_posts.html' %}
     {% endfor %}
     {% include 'posts/includes/paginator.html' %}
   </div>

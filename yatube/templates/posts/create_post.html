@@ -10,40 +10,11 @@
           <div class="card-header">
             {% if form.instance.pk %} Редактировать {% else %} Новый пост {% endif %}              
           </div>
-          {% load user_filters %}
-          {% if form.errors %}
-            {% for field in form %}
-              {% for error in field.errors %}
-                <div class="alert alert-danger">
-                  {{ error|escape }}
-                </div>
-              {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-              <div class="alert alert-danger">
-                {{ error|escape }}
-              </div>
-            {% endfor %}
-          {% endif %}
+          {% include 'includes/check_error.html' %}
           <div class="card-body">
             <form method="post" {% if form.instance.pk %} action="{% url 'group:post_edit' form.instance.pk %}" {% else %} action="{% url 'group:post_create' %}" {% endif %}>            
               {% csrf_token %}
-              {% for field in form %}
-              <div class="form-group row my-3 p-3">
-                <label for="{{ field.id_for_label }}">
-                  {{ field.label }}
-                  {% if field.field.required %}
-                    <span class="required text-danger">*</span>
-                  {% endif %}
-                </label>
-                {{ field|addclass:'form-control' }}
-                {% if field.help_text %}
-                  <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
-                    {{ field.help_text|safe }}
-                  </small>
-                {% endif %}
-              </div>
-              {% endfor %}
+              {% include 'includes/cycle_forms.html' %}
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" class="btn btn-primary">
                   {% if form.instance.pk %} Сохранить {% else %} Добавить {% endif %} 

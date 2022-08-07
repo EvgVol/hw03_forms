@@ -4,8 +4,8 @@
   <div class="container py-5">
     <h1>Все посты пользователя {{  author.get_full_name }} </h1>
     <h3>Всего постов: {{ author.posts.count }} </h3>
-    {% for group in page_obj %}
-      {% include 'includes/cart_posts.html' %}
+    {% for post in page_obj %}
+      {% include 'posts/includes/cart_posts.html' %}
     {% endfor %}
     {% include 'posts/includes/paginator.html' %}
   </div>

@@ -39,9 +39,8 @@
       <li class="nav-item">
         <a class="nav-link link-light" href="{% url 'users:logout' %}">Выйти</a>
       </li>
-      <li>
-
-        <a href="{% url 'group:profile' user %}">Пользователь: {{ user.username }}</a>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="{% url 'group:profile' user %}">Пользователь: {{ user.username }}</a>
       </li>
       {% else %}
       <li class="nav-item">
@@ -62,38 +61,4 @@
     </ul>
   </div>
   {% endwith %}
-{% comment %} 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'about:author' %}"><span style="color: red">С</span>оздать запись</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about:tech' %}"><span style="color: red">С</span>оздать сообщество</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span style="color: red">С</span>тоит взглянуть
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'about:author' %}">Об авторе проекта</a></li>
-            <li><a class="dropdown-item" href="{% url 'about:tech' %}">Технологии</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Обратная связь</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Отключенная</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-        <button class="btn btn-outline-success" type="submit">Поиск</button>
-      </form>
-    </div>
-  </div>
-{% endcomment %}
 </nav>
