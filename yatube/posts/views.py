@@ -52,7 +52,7 @@ def post_create(request):
         post.save()
 
         return redirect(
-            'group:profile',
+            'posts:profile',
             username=request.user.username
         )
 
