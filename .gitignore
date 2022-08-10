@@ -113,6 +113,12 @@ venv.bak/
 .venv/
 .vscode/
 static
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover 
+
 
 
 # Spyder project settings
