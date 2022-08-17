@@ -26,7 +26,10 @@ class Group(models.Model):
 class Post(models.Model):
     """Параметры добавления новых постов."""
 
-    text = models.TextField('Текст')
+    text = models.TextField(
+        'Текст',
+        help_text='Введите текст поста'
+    )
     pub_date = models.DateTimeField(
         'Дата публикации',
         auto_now_add=True
@@ -43,7 +46,8 @@ class Post(models.Model):
         related_name='posts',
         blank=True,
         null=True,
-        verbose_name='Группа'
+        verbose_name='Группа',
+        help_text='Группа, к которой будет относиться пост'
     )
 
     class Meta:
@@ -54,4 +58,4 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
 
     def __str__(self) -> str:
-        return self.text[:30]
+        return self.text[:15]

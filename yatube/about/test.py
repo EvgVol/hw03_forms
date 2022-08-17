@@ -11,17 +11,17 @@ class StatusURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.post = Post.objects.create(
+        Post.objects.create(
             text = 'Тестовый тест',
             author = User.objects.create_user(
                 first_name = "Тест-Имя",
                 last_name = "Тест-Фамилия",
-                username = "test_username",
+                username = "test-username",
                 email = "Test@E-Mail.com",
                 password = "test",
             )
         )
-        cls.group = Group.objects.create(
+        Group.objects.create(
             title = 'Тестовая группа',
             slug = 'test_slug',
             description = 'Описание тестовой группы',
@@ -30,19 +30,19 @@ class StatusURLTests(TestCase):
 
     def setUp(self):
         self.guest_client = Client()
-        self.user = User.objects.create_user(username='test_user')
+        self.user = User.objects.create_user(username='HasNoName')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
-        self.author_client = Client()
-        self.author_client.force_login(self.post.author)
         
 
     def test_out_page(self):
         """Проверка доступных страниц."""
         urlpatterns = (
             '/',
+            '/author/',
+            '/tech/',
             '/group/test_slug/',
-            '/profile/test_username/',
+            '/profile/test-username/',
         )
         for url in urlpatterns:
             with self.subTest():
@@ -56,42 +56,36 @@ class StatusURLTests(TestCase):
         response = self.authorized_client.get('/create/')
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_post_edit(self):
-        """Страница /posts/<int:post_id>/edit/ доступна автору поста."""
-        response = self.author_client.get(f'/posts/{self.post.id}/edit/')
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
     def test_create_url_redirect_anonymous_on_admin_login(self):
-        """Страница create/ перенаправляет анонимного пользователя
+        """Страница /create/ перенаправляет анонимного пользователя
         на страницу логина.
         """
         response = self.guest_client.get('/create/', follow=True)
         self.assertRedirects(
-            response, '/auth/login/?next=/create/')
+            response, '/admin/login/?next=/create/')
 
     def test_posts_detail_url_redirect_anonymous_on_admin_login(self):
         """Страница /posts/<int:post_id>/edit/ перенаправит анонимного
         пользователя на страницу логина.
         """
-        response = self.client.get(f'/posts/{self.post.id}/edit/', follow=True)
+        response = self.client.get('/posts/<int:post_id>/edit/', follow=True)
         self.assertRedirects(
-            response, (f'/auth/login/?next=/posts/{self.post.id}/edit/')
+            response, ('/admin/login/?next=/posts/<int:post_id>/edit/')
         )
     
     def test_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
         templates_url_names = {
-            'posts/index.html': '/',
-            'posts/group_list.html': '/group/test_slug/',
-            'posts/profile.html': '/profile/test_username/',
-            'posts/create_post.html': '/create/',
+            'author.html': '/author/',
+            'tech.html': '/tech/',
         }
+
         for template, address  in templates_url_names.items():
-            with self.subTest(address=address):
+            with self.subTest(address=address ):
                 response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
 
     def test_unexisting_page(self):
         """Тест несуществующей страницы."""
         response = self.guest_client.get('/unexisting/')
-        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+        self.assertEqual(response.status_code, 404)
